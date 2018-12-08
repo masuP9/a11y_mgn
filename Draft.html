@@ -100,26 +100,58 @@
 <li><code>aria-current</code></li>
 <li><code>aria-label</code></li>
 <li><code>aria-describedby</code></li>
-<li><code>aria-assertive</code></li>
+<li><code>aria-live</code></li>
 
 </ul>
 <h3>どうしてもHTMLのネイティブ要素が使えない時</h3>
-<ul>
-<li>そんなときは無いハズ</li>
-
-</ul>
+<p>HTMLの持つ機能を代替的に実装する場合</p>
+<pre><code class='language-html' lang='html'>&lt;input type=&quot;datatime-local&quot; /&gt;
+</code></pre>
+<pre><code class='language-html' lang='html'>&lt;div aria-expanded=&quot;true&quot;&gt;
+    &lt;input role=&quot;combobox&quot; type=&quot;text&quot; aria-haspopup=&quot;grid&quot; aria-activedescendant=&quot;date-2018-12-09&quot; /&gt;
+    &lt;div role=&quot;grid&quot;&gt;
+        table widget...
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<hr />
+<p>通常のHTMLネイティブ要素を装飾のためだけに代替しなくても良い</p>
+<pre><code class='language-html' lang='html'>&lt;span role=&quot;checkbox&quot; aria-checked=&quot;true&quot; tabindex=&quot;0&quot;&gt;&lt;/span&gt;
+</code></pre>
+<pre><code class='language-html' lang='html'>&lt;input type=&quot;checkbox&quot; checked style=&quot;opacity: 0;/* visually hidden style */&quot; /&gt;
+&lt;span aria-hidden=&quot;true&quot;&gt;
+    &lt;svg&gt;...&lt;/svg&gt;
+&lt;/span&gt;
+</code></pre>
 <h3>構造上、ネイティブの<code>role</code>やプロパティを上書きする必要がある時</h3>
-<ul>
-<li><code>role=&quot;none&quot;</code></li>
-<li><code>aria-hidden</code></li>
-
-</ul>
+<p>例) <code>role[tablist] &gt; role[tab]</code> </p>
+<pre><code class='language-html' lang='html'>&lt;ul role=&quot;tablist&quot;&gt;
+    &lt;li role=&quot;tab&quot;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<pre><code class='language-html' lang='html'>&lt;ul role=&quot;tablist&quot;&gt;
+    &lt;li role=&quot;none&quot;&gt;
+        &lt;a href=&quot;#tabpanel-1&quot; role=&quot;tab&quot;&gt;Tab&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
 <h2>WAI-ARIAを使う時に参照する資料やドキュメント</h2>
-<h3>オーサリングプラクティス</h3>
-<h3>ARIA in HTML</h3>
+<h3><a href='https://www.w3.org/TR/wai-aria-practices-1.1/'>WAI-ARIA Authoring Practices 1.1</a></h3>
+<h3><a href='https://www.w3.org/TR/html-aria/'>ARIA in HTML</a></h3>
+<p><a href='https://momdo.github.io/html-aria/'>ARIA in HTML 日本語訳</a></p>
 <h2>WAI-ARIA の検証</h2>
 <h3>ブラウザの Accessibility Tree</h3>
+<p>Chrome: デベロッパーツール &gt; Elements &gt; Accessibility</p>
+<p>Firefox: 開発ツール &gt; アクセシビリティ</p>
+<p>Safari: 開発ツール &gt; 要素 &gt; ノード &gt; アクセシビリティ</p>
+<p>Edge: 開発者ツール &gt; 要素 &gt; アクセシビリティのプロパティ</p>
 <h3>実際にスクリーンリーダーで検証してみる</h3>
+<ul>
+<li>ナレーター</li>
+<li>NVDA</li>
+<li>VoiceOver</li>
+
+</ul>
 <h2>実際のコーディングの流れ</h2>
 </body>
 </html>

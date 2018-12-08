@@ -113,27 +113,82 @@ WAI-ARIAはホスト言語のセマンティクスを補強する
 - `aria-current`
 - `aria-label`
 - `aria-describedby`
-- `aria-assertive`
+- `aria-live`
 
 ### どうしてもHTMLのネイティブ要素が使えない時
 
-- そんなときは無いハズ
+HTMLの持つ機能を代替的に実装する場合
+
+```html
+<input type="datatime-local" />
+```
+
+```html
+<div aria-expanded="true">
+    <input role="combobox" type="text" aria-haspopup="grid" aria-activedescendant="date-2018-12-09" />
+    <div role="grid">
+        table widget...
+    </div>
+</div>
+```
+
+----
+
+通常のHTMLネイティブ要素を装飾のためだけに代替しなくても良い
+
+```html
+<span role="checkbox" aria-checked="true" tabindex="0"></span>
+```
+
+```html
+<input type="checkbox" checked style="opacity: 0;/* visually hidden style */" />
+<span aria-hidden="true">
+    <svg>...</svg>
+</span>
+```
 
 ### 構造上、ネイティブの`role`やプロパティを上書きする必要がある時
 
-- `role="none"`
-- `aria-hidden`
+例) `role[tablist] > role[tab]` 
+
+```html
+<ul role="tablist">
+    <li role="tab"></li>
+</ul>
+```
+
+```html
+<ul role="tablist">
+    <li role="none">
+        <a href="#tabpanel-1" role="tab">Tab</a>
+    </li>
+</ul>
+```
 
 ## WAI-ARIAを使う時に参照する資料やドキュメント
 
-### オーサリングプラクティス
+### [WAI\-ARIA Authoring Practices 1\.1](https://www.w3.org/TR/wai-aria-practices-1.1/)
 
-### ARIA in HTML
+### [ARIA in HTML](https://www.w3.org/TR/html-aria/)
+
+[ARIA in HTML 日本語訳](https://momdo.github.io/html-aria/)
 
 ## WAI-ARIA の検証
 
 ### ブラウザの Accessibility Tree
 
+Chrome: デベロッパーツール > Elements > Accessibility
+
+Firefox: 開発ツール > アクセシビリティ
+
+Safari: 開発ツール > 要素 > ノード > アクセシビリティ
+
+Edge: 開発者ツール > 要素 > アクセシビリティのプロパティ
+
 ### 実際にスクリーンリーダーで検証してみる
+
+- ナレーター
+- NVDA
+- VoiceOver
 
 ## 実際のコーディングの流れ
