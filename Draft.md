@@ -4,14 +4,21 @@
 
 ## 今日のお話
 
-1. 実装腕力
-2. WAI-ARIAの前にHTML
-3. WAI-ARIAを使いこなす
-4. 実際のワークフロー
+1. はじめに
+2. WAI-ARIAとは
+3. WAI-ARIAの前にHTML
+4. WAI-ARIAを使いこなす
+5. 実際のワークフロー
 
-## 実装腕力
+## はじめに
+
+### フロントエンドの実装が担保するウェブアクセシビリティ
+
+### 実装腕力
 
 息を吐くようにアクセシブルな実装をする
+
+## WAI-ARIAとは
 
 ## WAI-ARIAの前にHTML
 
@@ -69,20 +76,53 @@ OK
 <abbr title="point">pt</abbr>
 ```
 
-#### その他
+#### `tabindex`
 
-- `lang`
-- `tabindex`
+- 値は順序
+- 1以上にせず、 `0` or `-1` を使用する
 
-## WAI-ARIAとは
+### Read the HTML Living Standard
+
+[4 The elements of HTML](https://html.spec.whatwg.org/multipage/#toc-semantics)
 
 ## WAI-ARIAを使う時の考え方
 
-### まずは普通のHTMLで組んで見て足りない時
+WAI-ARIAはホスト言語のセマンティクスを補強する
+
+- HTMLで表現できないものを表現する時
+- どうしてもHTMLのネイティブ要素が使えない時
+- 構造上、ネイティブのセマンティクスを上書きする必要がある時
 
 ### HTMLで表現できないものを表現する時
 
+- HTMLにない`role`
+- ステート、プロパティ
+
+#### よく使う `role`
+
+- `alert`
+- `dialog`
+- `tab`
+- `search`
+
+#### 頻出ステート、プロパティ
+
+- `aria-expanded`
+- `aria-hidden`
+- `aria-controls`
+- `aria-current`
+- `aria-label`
+- `aria-describedby`
+- `aria-assertive`
+
 ### どうしてもHTMLのネイティブ要素が使えない時
+
+- そんなときは無いハズ
+
+### 構造上、ネイティブの`role`やプロパティを上書きする必要がある時
+
+- `role="none"`
+- `aria-hidden`
 
 ## WAI-ARIAを使う時に参照する資料やドキュメント
 
