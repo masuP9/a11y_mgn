@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+  <title>セマンティクスの作り方、これまで、今、そして未来</title>
+  <meta name="description" content="HTMLによるネイティブセマンティクスからWAI-ARIAによるセマンティクスの補強、そしてAOM（Accessibility Object Model）によってJavaScriptからアクセシビリティツリーを更新できる未来。ウェブのセマンティクスの作り方について、これまでと現在を振り返りながら未来についてもご紹介いたします。">
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+  <link rel="stylesheet" href="css/additional.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/vs2015.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>
+          セマンティクスの作り方、これまで、今、そして未来
+        </h1>
+        <footer>
+          <p class="u-taL">
+            <small>
+              <time datetime="2018-11-25">2018-11-25</time>
+              HTML5 Conference 2018 E3
+            </small>
+          </p>
+        </footer>
+      </section>
+      <section>
+        <h2>私たち</h2>
+        <p class="u-taL u-dF -middle">
+          <img class="u-mr16" src="./assets/masuP9.jpg" height="150"
+            style="border-radius: 50%;" alt="@masuP9のプロフィール写真。ますぴーとかかれた木製のバッジの写真" />
+          <span>
+            <a href="https://twitter.com/masuP9">@masuP9</a><small class="u-ml4">(わかり手)</small>
+            <span class="u-dB">株式会社サイバーエージェント</span>
+          </span>
+        </p>
+        <p class="u-taL u-dF -middle">
+          <img class="u-mr16" src="./assets/o_ti.jpg" height="150"
+            style="border-radius: 50%;" alt="@o_tiのプロフィール写真。机の上の卵かけご飯" />
+          <span>
+            <a href="https://twitter.com/o_ti">@o_ti</a><small class="u-ml4">(キレ手)</small>
+            <span class="u-dB">株式会社まぼろし</span>
+          </span>
+        </p>
+        <aside class="note">
+
+        </aside>
+      </section>
+      <section>
+        <h2>今日のお話</h2>
+        <p>広義のセマンティクスと今回のセマンティクス</p>
+        <aside class="notes">
+          <p><abbr title="Linked Of Data">LOD</abbr>などの文書間セマンティクスや、XMLやRDFなどの独自の意味の疎通というよりかは、一般的なウェブサイトやウェブアプリをエンドユーザーがブラウザを通して利用する際のセマンティクス</p>
+        </aside>
+      </section>
+      <section>
+        <p>今日はいくつかある未来の中から<span class="u-dIb">ある一つの未来の話をします</span></p>
+      </section>
+      <section>
+        <h3>目次</h3>
+        <ol role="directory">
+          <li>セマンティクスの恩恵</li>
+          <li>HTML</li>
+          <li>WAI-ARIA</li>
+          <li style="white-space: nowrap;">Accessibility Object Model</li>
+        </ol>
+      </section>
+      <section>
+        <h2>セマンティクスの恩恵</h2>
+        <p>ウェブがよりアクセシブルになる。</p>
+      </section>
+      <section>
+        <h3>アクセシブルとは？</h3>
+        <ul>
+          <li>近寄りやすいこと</li>
+          <li>利用しやすいこと</li>
+        </ul>
+        <aside class="notes">
+          近寄りやすいこと、利用しやすいこと。<br>
+          アクセシブル、アクセシビリティの原義としてはこの二つですね。<br>
+          近寄りやすさとは物理的な話で、単に訪れやすさのことです。<br>
+          利用しやすさはそのまま、使いやすいさという解釈で良いです。<br>
+          IT分野ではユーザビリティの文脈で語られている話です。
+        </aside>
+      </section>
+      <section>
+        <h2><abbr title="Hyper Text Markup Language">HTML</abbr></h2>
+        <aside class="notes">
+          では、HTMLのアクセシビリティはどうなのでしょうか。
+        </aside>
+      </section>
+      <section>
+        <p>HTMLというだけで得られるアクセシビリティ</p>
+        <ul>
+          <li>
+            近寄りやすいこと
+            <ul>
+              <li>どこにいてもページが見られる</li>
+            </ul>
+          </li>
+          <li>
+            利用しやすいこと
+            <ul>
+              <li>様々なOS、ブラウザで閲覧できる</li>
+              <li>テキストがコピーできる</li>
+              <li>画像が保存できる</li>
+            </ul>
+          </li>
+        </ul>
+        <aside class="notes">
+          まず忘れてはならないのは、HTMLというだけで「アクセシブル」だという事実です。<br>
+          ウェブページであればどこにいても閲覧可能ですよね。<br>
+          そして、様々なOS、ブラウザで見ることができます。<br>
+          テキストがコピーできますよね。画像を保存することもできます。<br>
+          これが紙のチラシだったら、テレビの字幕だったら、そういったことはできません。
+        </aside>
+      </section>
+      <section>
+        <p><small>※電源とWi-Fiがあれば</small></p>
+        <aside class="notes">
+          ただし、インターネットであるということは、ネットーワークが必須ですが……
+        </aside>
+      </section>
+      <section>
+        <h3>セマンティックなHTMLで<br>得られるアクセシビリティ</h3>
+        <ul>
+          <li>特定の型の情報に直接アクセスできる</li>
+          <li>テキストや画像が、どんな文脈で、どういう役割で示された情報なのかがわかる</li>
+          <li>どういった構造体か俯瞰できる</li>
+        </ul>
+        <p><small>etc...</small></p>
+        <aside class="notes">
+          では、HTMLがセマンティックだとどういったアクセシビリティを得られるのでしょうか。<br>
+          セマンティックなHTMLだと、見た目だけではない裏側のメタが強化されます。<br>
+          それによって、ユーザーは特定の型の情報に直接アクセスする手段を得ます。<br>
+          テキストや画像がどんな文脈でどういう役割で示された情報なのかを得る手段を得ます。<br>
+          HTML全体としてどういった構造の情報なのかを俯瞰できることも大きな利点ですね。<br>
+          特定の日付の画像を抽出したり、特定のリンク（例えばPDF）をリストアップしたり、そういったことができるわけです。<br>
+          これらを具体的に提供するツールはブラウザ自体には搭載されておらず、拡張機能で提供されています。
+        </aside>
+      </section>
+      <section>
+        <h3>HTML5のセマンティクスは</h3>
+        <ul>
+          <li>HTML4.01の要素の廃止と刷新</li>
+          <li>「セクショニング」という概念の導入により、見出しの及ぶ範囲が規定された</li>
+          <li>フレージングが強化されて、強調、細目、時間表現が可能になった</li>
+        </ul>
+        <p><small>etc...</small></p>
+        <aside class="notes">
+          HTML5で新たに定義されたセマンティクスの大きなトピックは、<br>
+          HTML4.01時代の要素の廃止と刷新、<br>
+          セクショニングという概念の導入、<br>
+          フレージング、言うなれば平のテキストの意味づけの強化です。<br>
+          HTML5では物理要素が廃止され、論理要素主体になりました。<br>
+          セクショニングが導入され、情報はセクションごとに紐づけられるようになりました。<br>
+          セクション単位でヘッダー（前提）、フッター（補足）、ナビゲーションが定義できるようになったわけです。<br>
+          HTML4.01ではナビゲーションは「なんかリンクのリスト」という程度しか定義できなかったことから比べると目覚ましい進化ですよね。<br>
+        </aside>
+      </section>
+      <section>
+        <h3>HTMLは宣言的にセマンティクスを定義する</h3>
+        <pre><code class="html">&lt;section&gt;
+  &lt;h2&gt;見出し&lt;/h2&gt;
+  &lt;p&gt;&lt;a href=&quot;#&quot;&gt;パラグラフ&lt;/a&gt;&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;リスト&lt;/li&gt;
+    &lt;li&gt;リスト&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;button type=&quot;button&quot;&gt;ボタン&lt;/button&gt;
+&lt;/section&gt;</code></pre>
+        <aside class="notes">
+          HTMLのセマンティクスは宣言的に記述することで提供されます。こんな感じですね。
+        </aside>
+      </section>
+      <section>
+        <p>タグ（要素）によってセマンティクスを<br />要素の記述順と入れ子によって構造を構築</p>
+        <aside class="notes">
+          要素でコンテンツを囲み、要素の書き順と入れ子で構造を作る。<br>
+          こっからここまでがリストだよ、この見出しの本文はここだよ、というセマンティクスが作られるわけですね。
+        </aside>
+      </section>
+      <section>
+        <h3>HTMLの課題</h3>
+        <p><em>要素名（タグ）に依存する</em></p>
+        <aside class="notes">
+          しかしHTMLにも、問題点と言ってもいいかもしれませんが、課題はあります。<br>
+          仕様で定義されている要素しかセマンティクスが得られない、ということです。
+        </aside>
+      </section>
+      <section>
+        <ul>
+          <li>セマンティクスの変更 👉 DOMツリーの変更</li>
+          <li>新しいセマンティクス 👉 新しい要素</li>
+          <li>状態やプロパティの欠如</li>
+        </ul>
+        <aside class="notes">
+          同じコンテンツでもセマンティクスを変えたいとなったら、要素を変えなくてはいけませんね。<br>
+          要素が変わるとブラウザのデフォルトスタイルシートが変わりますね。それでも見た目をそのままにしたいとなると、ちょっと困っちゃうわけです。<br>
+          リセット的に書いていたスタイルが無駄になったり、さらに必要になったりしちゃうと。<br>
+          要素を変えつつビジュアルを保つのはCSS的にはかなりのコストです。<br>
+          そして先ほども申し上げた通り、HTMLにない要素はないのです。ないものはない。悪い意味でないんです。<br>
+          さらに、HTMLには状態を表現する力が非常に乏しいです。擬似クラスでかろうじて可能ですが、セマンティックかと言われるとうーん、ですね。
+        </aside>
+      </section>
+      <section>
+        <p>非同期通信で画面が書き換わるアプリケーションなウェブサイトが広まり、現状のHTMLのネイティブセマンティクスでは足りなくなっている</p>
+        <aside class="notes">
+          そしてそれらの要件は、昨今のアプリなウェブサイトでは必須の項目ですよね。非同期で画面が書き換わるようなウェブサイトでは特に状態の管理は絶対に必要です。
+        </aside>
+      </section>
+      <section>
+        <h3>HTMLも進化を続ける</h3>
+        <aside class="notes">
+          とはいえHTMLもいつまでの今のままではありません。
+        </aside>
+      </section>
+      <section>
+        <h4>dialog要素</h4>
+        <p>モーダルなダイアログをHTML要素で表現できる</p>
+        <pre><code class="html">&lt;button id=&quot;confirm&quot;&gt;確認&lt;/button&gt;
+
+&lt;dialog id=&quot;privacy-policy&quot;&gt;
+  &lt;h1&gt;プライバシーポリシー&lt;/h1&gt;
+  &lt;p&gt;同意せよ&lt;/p&gt;
+  &lt;button id=&quot;agree&quot;&gt;同意します&lt;/button&gt;
+&lt;/dialog&gt;
+</code></pre>
+        <aside class="notes">
+          例えばdialog要素。これはモーダルなダイアログをネイティブで提供する要素です。<br>
+          dialog要素がアクティブになると、必ずページの最前面に表示されます。<br>
+          もうz-indexの霊峰から滑落事故を起こさなくて済みますね。
+        </aside>
+      </section>
+      <section>
+        <ul>
+          <li>W3CではHTML5.2で勧告済み</li>
+          <li>当然<a href="https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element" target="_blank">WHATWGにも仕様はある</a></li>
+          <li>表示切り替えにはJavaScriptによる制御が必要</li>
+          <li>ブラウザ対応はGoogle ChromeとOperaのみ</li>
+          <li><a href="https://caniuse.com/#feat=dialog" target="_blank">Firefox 53からはフラグ立てると利用可能。他は未対応</a></li>
+        </ul>
+        <aside class="notes">
+          dialog要素はHMTL5.2ですでに勧告済みです。HTML5.2て2017年の12/14に勧告されてるんですよ。一年近く前です。<br>
+          しかしブラウザ対応はChromeとOperaのみです。Firefoxは53からフラグ立てれば利用可能ですが、63になった今でもフラグは必要です。<br>
+          EdgeとIE11はお察しです。
+        </aside>
+      </section>
+      <section>
+        <h4>hgroup要素</h4>
+        <p class="u-mb0">見出しを補強するリードのようなもの<br>副次的な見出し/キャッチコピー/スローガンを<br>マークアップできる。</p>
+        <pre class="u-mt0"><code class="html">&lt;section&gt;
+&lt;hgroup&gt;
+  &lt;h1&gt;deisui_html_radio #sp1&lt;/h1&gt;
+  &lt;h2&gt;〜マークアップは裏切らない〜&lt;/h2&gt;
+&lt;/hgroup&gt;
+
+&lt;p&gt;我々はJSフレームワークと戦い、マークアップ共和国を作りました。&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        <aside class="notes">
+          hgroupという要素も紹介させてください。<br>
+          2つの見出し要素を中に持つことで、副次的な見出し、キャッチコピー、スローガンなどを示せる要素です。
+        </aside>
+      </section>
+      <section>
+        <ul>
+          <li>二番目の見出し要素はアウトラインを構築しなくなる</li>
+          <li>W3Cからは削除されたものの<a href="https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element" target="_blank">WHATWGには仕様はある</a></li>
+          <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/hgroup#Browser_compatibility" target="_blank">IE11、Edge含む全てのブラウザで対応済み</a></li>
+          <li>きっと復権するはず！！！</li>
+        </ul>
+        <aside class="notes">
+          2つ目の見出し要素は、見出し要素なんだけどアウトラインを構築しません。<br>
+          これにより「見出しでも本文でもない、副次的なテキスト」が提供されます。<br>
+          W3Cでは削除されたんですが、WHATWGでは依然として仕様が残り続けていませす。<br>
+          きっとW3Cでも復活すると思います。<br>
+          MDNのリンクを見ると、「あ〜〜こういうのやりたかった！」てなると思います。やっていいんですよ。<br>
+          だって各種ブラウザはとっくに対応済みですから。
+        </aside>
+      </section>
+      <section>
+        <p>まだ見ぬ要素も追加される可能性は十分ある</p>
+        <aside class="notes">
+          <code>dialog</code>や<code>hgroup</code>だけではなく、まだ見ぬ要素もきっとこれからHTMLに追加される可能性はいくらでもあります。
+        </aside>
+      </section>
+      <section>
+        <p>HTML以外のセマンティクスと言えば？</p>
+        <ul>
+          <li>XHTML</li>
+          <li>Microdata</li>
+          <li>RDF</li>
+          <li>Schema.org</li>
+        </ul>
+        <p><small>etc...</small></p>
+        <aside class="notes">
+          さて、HTML以外のセマンティクスはどうでしょうか。
+        </aside>
+      </section>
+      <section>
+        <p>よくあるMicrodataで提供されたセマンティクス</p>
+        <ul>
+          <li>パンくずリスト（ページ階層情報）</li>
+          <li>記事リスト（カテゴリトップから見て、そのカテゴリに属する記事ものの一覧）</li>
+          <li>レビュー情報</li>
+        </ul>
+        <aside class="notes">
+          よくあるのはMicrodataでしょう。パンくず、記事リスト、レビューなどありますよね。
+        </aside>
+      </section>
+      <section>
+        <p>確かに現在のHTMLにないセマンティクスを提供するが、<br>これらはどちらかというとデータ構造を俯瞰したものを提供する力が強い。</p>
+      </section>
+      <section>
+        <p>なのでそのウェブページ上で利用するというよりは、外部ツール（検索エンジン）がパースしてそのウェブページの外で使われている。</p>
+      </section>
+      <section>
+        <p>やりたいのはそのウェブページ自体のセマンティクスの強化なんだよ！！！</p>
+      </section>
+      <section>
+        <h2>そこで<abbr title="Accessible Rich Internet Application">WAI-ARIA</abbr></h2>
+        <p class="u-taL">アプリケーションなウェブページをアクセシブルにするため、HTML（ホスト言語）のセマンティクスを補強するための仕様</p>
+      </section>
+      <section>
+        <aside>
+          <em class="u-fwB">
+            <span class="u-fzL">&ldquo;</span>
+            ホスト言語のセマンティクスを補強する
+            <span class="u-fzL">&rdquo;</span>
+          </em>
+        </aside>
+      </section>
+      <section>
+        <h3>特徴</h3>
+        <ul>
+          <li><em>属性</em>によってセマンティクスを付与</li>
+          <li><em>役割</em>や<em>状態</em>、<em>プロパティ</em>を持てる</li>
+        </ul>
+      </section>
+      <section>
+        <dl class="u-fzL">
+          <dt><code>role</code></dt>
+          <dd>役割</dd>
+          <dt><code>aria-*</code></dt>
+          <dd>状態、プロパティ</dd>
+        </dl>
+      </section>
+      <section>
+        <div class="u-fzL">
+          <pre><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;
+  &lt;li role=&quot;treeitem&quot; aria-selected=&quot;true&quot;&gt;...&lt;/li&gt;
+  &lt;li role=&quot;treeitem&quot; aria-selected=&quot;false&quot;&gt;...&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+      </div>
+      </section>
+      <section>
+        <h4>役割 : <code>role</code></h4>
+        <pre><code class="html">&lt;ul role=&quot;tree&quot;&gt;&lt;/ul&gt;</code></pre>
+        <p>これはツリーウィジェットである</p>
+      </section>
+      <section>
+        <h4>状態 : ステート</h4>
+        <pre><code class="html">&lt;li role=&quot;treeitem&quot; aria-selected=&quot;true&quot;&gt;...&lt;/li&gt;</code></pre>
+        <p>このツリーアイテムは選択されている/されてない</p>
+      </section>
+      <section>
+        <h4>プロパティ</h4>
+        <pre><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;&lt;/ul&gt;</code></pre>
+        <p>このツリーウィジェットの名前プロパティは<code class="u-dIb">menu tree</code>である</p>
+      </section>
+      <section>
+        <h4>関係のセマンティクス</h4>
+        <p>DOMツリーに依存しない関係性を定義できる。</p>
+      </section>
+      <section>
+        <div class="u-taL u-fzS u-demo">
+          <label>パスワード: <input type="password" aria-describedby="description" /></label>
+          <p id="description">パスワードは8文字以上必要です。</p>
+        </div>
+        <pre><code class="html">&lt;label&gt;パスワード:
+  &lt;input type=&quot;password&quot; aria-describedby=&quot;description&quot; /&gt;
+&lt;/label&gt;
+&lt;p id=&quot;description&quot;&gt;パスワードは8文字以上必要です。&lt;/p&gt;
+</code></pre>
+      </section>
+      <section>
+        <h3>WAI-ARIAのユースケース</h3>
+      </section>
+      <section>
+        <h4>タブ</h4>
+        <p>同じ表示領域で内容が切り替わるウィジェット</p>
+        <ul>
+          <li class="fragment"><code>role=&quot;tablist&quot;</code></li>
+          <li class="fragment"><code>role=&quot;tab&quot;</code></li>
+          <li class="fragment"><code>role=&quot;tabpanel&quot;</code></li>
+          <li class="fragment"><code>aria-selected</code></li>
+          <li class="fragment"><code>aria-hidden</code></li>
+        </ul>
+      </section>
+      <section>
+          <h4>WAI-ARIAなし</h4>
+          <pre><code>&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;a href=&quot;#tabItem1&quot;&gt;越智&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href=&quot;#tabItem2&quot;&gt;桝田&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+&lt;div&gt;
+  &lt;div id=&quot;tabItem1&quot;&gt;キレ手&lt;/div&gt;
+  &lt;div id=&quot;tabItem2&quot;&gt;わかり手&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+        <section>
+          <h4>WAI-ARIAあり</h4>
+          <pre><code>&lt;nav&gt;
+    &lt;ul role=&quot;tablist&quot;&gt;
+      &lt;li role=&quot;presentation&quot;&gt;
+        &lt;a href=&quot;#tabItem1&quot; role=&quot;tab&quot; aria-controls=&quot;tabItem1&quot; aria-selected=&quot;true&quot; id=&quot;tabBtn1&quot;&gt;越智&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li role=&quot;presentation&quot;&gt;
+        &lt;a href=&quot;#tabItem2&quot; role=&quot;tab&quot; aria-controls=&quot;tabItem2&quot; aria-selected=&quot;false&quot; id=&quot;tabBtn2&quot;&gt;桝田&lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+  &lt;div&gt;
+    &lt;div id=&quot;tabItem1&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;tabBtn1&quot; aria-hidden=&quot;false&quot;&gt;キレ手&lt;/div&gt;
+    &lt;div id=&quot;tabItem2&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;tabBtn2&quot; aria-hidden=&quot;true&quot;&gt;わかり手&lt;/div&gt;
+  &lt;/div&gt;</code></pre>
+        </section>
+        <section>
+          <h3>ライブリージョン</h3>
+          <p>更新される領域であることを支援技術に伝える</p>
+        </section>
+        <section>
+          <ul>
+            <li>チャット</li>
+            <li>株価表示ウィジェット</li>
+            <li>スポーツのテキスト実況</li>
+            <li>フォームの入力エラー</li>
+          </ul>
+          <p>etc...</p>
+        </section>
+        <section>
+            <h4>コメント欄</h4>
+            <pre><code class="html">&lt;div role=&quot;log&quot; aria-live=&quot;polite&quot;&gt;
+  &lt;ol&gt;
+    &lt;li&gt;魔界合宿&lt;/li&gt;
+    &lt;li&gt;「人はすぐ死ぬ」&lt;/li&gt;
+    &lt;li&gt;伊東家のこじらせ&lt;/li&gt;
+    &lt;li&gt;マスみがある&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</code></pre>
+      </section>
+      <section>
+        <pre><code class="html">&lt;div role=&quot;log&quot; aria-live=&quot;polite&quot;&gt;
+  &lt;ol&gt;
+    &lt;li&gt;魔界合宿&lt;/li&gt;
+    &lt;li&gt;「人はすぐ死ぬ」&lt;/li&gt;
+    &lt;li&gt;伊東家のこじらせ&lt;/li&gt;
+    &lt;li&gt;マスみがある&lt;/li&gt;
+    &lt;li&gt;例え話下手くそ選手権優勝&lt;/li&gt; &lt;!-- New --&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</code></pre>
+      </section>
+      <section>
+        <h3>ホスト言語との相互進化</h3>
+        <p>WAI-ARIAはホスト言語と相互に進化していく</p>
+        <div class="u-fzS">
+          <p>e.g. <code>role=&quot;switch&quot;</code> 👉 <code>input[type=&quot;switch&quot;]</code></p>
+          <ul>
+            <li><a href="https://github.com/whatwg/html/issues/4180">Requesting &lt;input type=&quot;switch&quot;&gt; · Issue #4180 · whatwg/html</a></li>
+            <li><a href="https://w3c.github.io/aria/#switch">Accessible Rich Internet Applications (WAI-ARIA) 1.2</a></li>
+          </ul>
+        </div>
+      </section>
+      <section>
+        <h3>ネイティブセマンティクスの尊重</h3>
+        <p>WAI-ARIAは<em>補強</em>するもので<strong>代替では無い</strong></p>
+      </section>
+      <section>
+        <figure>
+          <figcaption class="u-taL">😠DON'T</figcaption>
+          <pre><code class="html"><div role="button"></div></code></pre>
+        </figure>
+        <figure>
+          <figcaption class="u-taL">😍DO</figcaption>
+          <pre><code class="html"><button></button></code></pre>
+        </figure>
+      </section>
+      <section>
+        <p>これらの付与されたセマンティクスはどのようにユーザー（支援技術）に伝わるか</p>
+      </section>
+      <section>
+        <h3>アクセシビリティ<abbr title="Application Programing Interface">API</abbr></h3>
+        <p>OSが支援技術にセマンティクスなどの<br>情報を伝えるAPI</p>
+      </section>
+      <section>
+        <p>ブラウザがレンダリングしているコンテンツと<br>セマンティクスをアクセシビリティAPIの<br>オブジェクトに変換して支援技術に伝える</p>
+      </section>
+      <section>
+        <figure>
+          <svg width="961" height="609" viewBox="0 0 961 609" role="img">
+            <g fill="none" fill-rule="evenodd" font-weight="bold">
+              <g>
+                <rect width="297" height="606" fill="#FFF" stroke="#333" stroke-width="3" />
+                <text fill="#333" font-size="32" x="85" y="96">
+                  ブラウザ
+                </text>
+                <g class="fragment">
+                  <g>
+                    <rect width="121" height="44" x="128" y="344" stroke="#333" stroke-width="2" />
+                    <text fill="#333" font-size="28" x="145" y="377">
+                      HTML
+                    </text>
+                  </g>
+                  <text fill="#333" font-size="28" x="127" y="327">
+                    DOM
+                  </text>
+                  <rect width="174" height="111" x="102" y="291" stroke="#333" stroke-width="2" />
+                </g>
+                <g class="fragment">
+                  <rect width="174" height="58" x="102" y="474" stroke="#333" stroke-width="2" />
+                  <text fill="#333" font-size="28" x="160" y="512">
+                    CSS
+                  </text>
+                </g>
+                <g transform="translate(102 170)" class="fragment">
+                  <rect width="174" height="58" stroke="#333" stroke-width="2" />
+                  <text fill="#333" font-size="28">
+                    <tspan x="31" y="38">WAI-ARIA</tspan>
+                  </text>
+                </g>
+                <g transform="translate(16 216)" class="fragment">
+                  <rect width="55" height="230" stroke="#333" stroke-width="2" />
+                  <text fill="#333" font-size="28" x="27" y="105" style="writing-mode: vertical-rl;">
+                    JS
+                  </text>
+                </g>
+                <g class="fragment">
+                  <path fill="#333" fill-rule="nonzero" d="M28.1149867,-1 L14.7694775,-8.50684893 L13.0263264,-9.48737141 L14.9873714,-12.9736736 L16.7305225,-11.9931511 L36.7305225,-0.743151074 L39.8294577,1 L36.7305225,2.74315107 L16.7305225,13.9931511 L14.9873714,14.9736736 L13.0263264,11.4873714 L14.7694775,10.5068489 L28.1149867,3 L15.75,3 L0.352657057,3 L-1.64734294,3 L-1.64734294,-1 L0.352657057,-1 L15.75,-1 L28.1149867,-1 Z"
+                    transform="translate(75 345)" />
+                  <path fill="#333" fill-rule="nonzero" d="M20.6656003,3.85862962 L5.92075648,7.98718589 L3.99482844,8.52644574 L2.91630874,4.67458967 L4.84223678,4.13532981 L26.9393237,-2.05185452 L30.3631958,-3.0105387 L29.4045116,0.41333337 L23.2173272,22.5104203 L22.6780674,24.4363483 L18.8262113,23.3578286 L19.3654712,21.4319006 L23.4940274,6.68705674 L14.7506615,15.4304227 L1.76687062,28.4142136 L0.352657057,29.8284271 L-2.47577007,27 L-1.06155651,25.5857864 L11.9222344,12.6019956 L20.6656003,3.85862962 Z"
+                    transform="translate(75 212)" />
+                </g>
+                <g class="fragment">
+                  <text fill="#333" font-size="56" font-weight="300" x="170" y="455">
+                    +
+                  </text>
+                  <text fill="#333" font-size="56" font-weight="300" x="170" y="277">
+                    +
+                  </text>
+                </g>
+              </g>
+              <g class="fragment">
+                <rect width="300" height="150" x="362" y="230" fill="#FFF" stroke="#333" />
+                <path fill="#FFF" d="M6.38501328,2.5 L19.7305225,10.0068489 L21.4736736,10.9873714 L19.5126286,14.4736736 L17.7694775,13.4931511 L-2.23052248,2.24315107 L-5.32945772,0.5 L-2.23052248,-1.24315107 L17.7694775,-12.4931511 L19.5126286,-13.4736736 L21.4736736,-9.98737141 L19.7305225,-9.00684893 L6.38501328,-1.5 L18.75,-1.5 L41.25,-1.5 L53.6149867,-1.5 L40.2694775,-9.00684893 L38.5263264,-9.98737141 L40.4873714,-13.4736736 L42.2305225,-12.4931511 L62.2305225,-1.24315107 L65.3294577,0.5 L62.2305225,2.24315107 L42.2305225,13.4931511 L40.4873714,14.4736736 L38.5263264,10.9873714 L40.2694775,10.0068489 L53.6149867,2.5 L41.25,2.5 L18.75,2.5 L6.38501328,2.5 Z"
+                  transform="translate(300 304)" />
+                <text fill="#333" font-size="28">
+                  <tspan x="484" y="298">OS</tspan>
+                  <tspan x="398" y="326" font-size="24">アクセシビリティ</tspan>
+                  <tspan>API</tspan>
+                </text>
+              </g>
+              <g class="fragment">
+                <rect width="300" height="150" x="717" y="230" fill="#FFF" stroke="#333" />
+                <path fill="#FFF" d="M7.38501328,3.5 L20.7305225,11.0068489 L22.4736736,11.9873714 L20.5126286,15.4736736 L18.7694775,14.4931511 L-1.23052248,3.24315107 L-4.32945772,1.5 L-1.23052248,-0.243151074 L18.7694775,-11.4931511 L20.5126286,-12.4736736 L22.4736736,-8.98737141 L20.7305225,-8.00684893 L7.38501328,-0.5 L19.75,-0.5 L38.25,-0.5 L50.6149867,-0.5 L37.2694775,-8.00684893 L35.5263264,-8.98737141 L37.4873714,-12.4736736 L39.2305225,-11.4931511 L59.2305225,-0.243151074 L62.3294577,1.5 L59.2305225,3.24315107 L39.2305225,14.4931511 L37.4873714,15.4736736 L35.5263264,11.9873714 L37.2694775,11.0068489 L50.6149867,3.5 L38.25,3.5 L19.75,3.5 L7.38501328,3.5 Z"
+                  transform="translate(659 303)" />
+                <text fill="#333" font-size="32" x="775" y="317">
+                  支援技術
+                </text>
+              </g>
+            </g>
+          </svg>
+          <figcaption style="font-size: 0.5em;">ブラウザがコンテンツやセマンティクスを支援技術に伝えるまで</figcaption>
+        </figure>
+      </section>
+      <section>
+        <h3>WAI-ARIAの課題</h3>
+      </section>
+      <section>
+        <h4>セマンティクスがDOMに依存</h4>
+        <p>要素に属性として付与しないといけない</p>
+      </section>
+      <section>
+        <ul>
+          <li>DOMノード(要素)がないUIに関与できない<br />（e.g. <code>canvas</code>の中のUIなど</li>
+          <li class="fragment">関係属性から要素を参照する場合、要素に識別用の<code>id</code>が必要</li>
+          <li class="fragment">アクセシビリティツリーに影響を及ぼすが、結果どうなったかを確認できない</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Accessibility Object Model</h2>
+        <p class="u-taL">アクセシビリティAPIに変換されうるセマンティクスをモデルとして定義しJavaScriptから操作・探索可能にしたもの（ないしは提案）</p>
+      </section>
+      <section>
+        <h3>IDLインターフェースから<br />ARIA属性を反映する</h3>
+        <div class="u-fzL">
+          <pre><code class="JavaScript">const tree = document.createElement('ul');
+tree.role = 'tree';
+tree.ariaLabel = 'menu tree';</code></pre>
+        </div>
+      </section>
+      <section>
+        <h4>関係のセマンティクスも</h4>
+        <div class="u-fzL">
+          <pre><code class="javascript">const desc = document.querySelectorAll('.tree-desc');
+tree.ariaDescribedBy = [...desc].map(el =&gt; el.id).join(' ');</code></pre>
+        </div>
+      </section>
+      <section>
+        <h4>Demo</h4>
+        <p data-height="320" data-theme-id="dark" data-slug-hash="wQjqWr" data-default-tab="js,result" data-user="masuP9" data-pen-title="Demo: AOM Reflecting ARIA attributes" class="codepen">See the Pen <a href="https://codepen.io/masuP9/pen/wQjqWr/">Demo: AOM Reflecting ARIA attributes</a> by masuP9 (<a href="https://codepen.io/masuP9">@masuP9</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+      </section>
+      <section>
+        <h3>Out-of-date syntax</h3>
+        <div class="u-fzL">
+          <pre><code class="javascript">tree.accessibleNode.role = &quot;tree&quot;;
+tree.accessibleNode.label = &quot;menu tree&quot;;</code></pre>
+        </div>
+      </section>
+      <section>
+        <h3>DOMに反映されないARIAを付与する</h3>
+        <ul>
+          <li>IDLでは要素上のDOMへ属性を反映のみ</li>
+          <li>参照するにも<code>id</code>が必要</li>
+        </ul>
+      </section>
+      <section>
+        <p>さっきのこれ</p>
+        <div class="u-fzL">
+          <pre><code class="javascript">const desc = document.querySelectorAll('.tree-desc');
+tree.ariaDescribedBy = [...desc].map(el =&gt; el.id).join(' ');</code></pre>
+        </div>
+      </section>
+      <section>
+        <p>こうしたい！</p>
+        <div class="u-fzL">
+          <pre><code class="javascript">const desc = document.querySelectorAll('.tree-desc');
+tree.ariaDescribedByElements = [...desc];</code></pre>
+        </div>
+      </section>
+      <section>
+        <h4>ユースケース Web Componentsのデフォルトセマンティクスを定義する</h4>
+        <div class="u-fzL">
+          <pre><code class="javascript">class TabListElement extends HTMLElement { ... }
+customElements.define(
+  &quot;custom-tablist&quot;,
+  TabListElement,
+  { role: &quot;tablist&quot;, ariaOrientation: &quot;horizontal&quot; });</code></pre>
+        </div>
+      </section>
+      <section>
+        <p>Web Componentsでの<code>shadowRoot</code>問題</p>
+        <ul class="u-fzS">
+          <li><a href="https://github.com/w3c/webcomponents/issues/758">How to define APIs only for custom element authors · Issue #758 · w3c/webcomponents</a></li>
+        </ul>
+      </section>
+      <section>
+        <h3>支援技術からのイベントに対応</h3>
+        <p class="u-taL">支援技術が起こすイベントをDOMのイベントに<br>ルーティングしハンドリングすることができるようにする。</p>
+      </section>
+<!--       <section>
+        <h4>支援技術からのイベントのルーティング</h4>
+        <p>(例: VoiceOver の Click</p>
+        <ol>
+          <li class="fragment">VoiceOverユーザーはある要素上で<kbd class="u-dIb"><kbd>control</kbd> + <kbd>option</kbd> + <kbd>スペース</kbd></kbd>を同時に押す</li>
+          <li class="fragment">VoiceOverは該当のアクセシビリティノード上で <code>accessibilityPerformPress()</code> を実行する</li>
+          <li class="fragment">ブラウザが <code>click</code> イベントにルーティングする</li>
+          <li class="fragment">要素上で <code>onclick</code> イベントが発火する</li>
+        </ol>
+      </section> -->
+      <section>
+        <button type="button" onclick="alert('click!')" style="font-size: 4em;padding: 0 1em;border-radius: 100em;">button</button>
+        <pre><code class="html">&lt;button type=&quot;button&quot; onclick=&quot;alert('click!')&quot;&gt;button&lt;/button&gt;</code></pre>
+      </section>
+      <section>
+        <p>現状、支援技術のイベントをルーティングするにはDOMのイベントが足りない。</p>
+        <div class="u-fzS fragment">
+          <p class="u-mb4"><code>role=&quot;slider&quot;</code>の増加/減少イベントなど</p>
+          <ul>
+            <li><a href="https://developer.apple.com/documentation/appkit/nsaccessibilityslider/1528478-accessibilityperformincrement?language=objc"><code>accessibilityPerformIncrement</code></a></li>
+            <li><a href="https://developer.apple.com/documentation/appkit/nsaccessibilityslider/1534967-accessibilityperformdecrement?language=objc"><code>accessibilityPerformDecrement</code></a></li>
+          </ul>
+          <p class="u-mt20"><code>&lt;input type=&quot;range&quot; /&gt;要素上のみハンドリング可能</code></p>
+        </div>
+      </section>
+      <section>
+        <h4>(動かない)Demo</h4>
+        <p data-height="320" data-theme-id="dark" data-slug-hash="WYJZaN" data-default-tab="js,result" data-user="masuP9" data-pen-title="Demo: Listen for input events from AT" class="codepen">See the Pen <a href="https://codepen.io/masuP9/pen/WYJZaN/">Demo: Listen for input events from AT</a> by masuP9 (<a href="https://codepen.io/masuP9">@masuP9</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+      </section>
+      <section>
+        <h4>Out-of-date syntax</h4>
+        <pre><code class="javascript">element.accessibleNode.addEventListener('accessibleclick', function);
+element.addEventListener('accessibleclick', function);</code></pre>
+      </section>
+      <section>
+        <p>プライバシーの問題</p>
+        <aside class="notes">
+          <ul>
+            <li>支援技術を利用しているということは重大なプライバシーの問題？</li>
+            <li>支援技術のイベント全てを汎用のイベントにルーティングすることができるのか？</li>
+            <li>利便性とプライバシーのトレードオフ</li>
+            <li>位置情報などと同じく許可ベースにするという議論も</li>
+          </ul>
+          <p><small>現在は実験的な実装もどれも動かなくなっている</small></p>
+        </aside>
+      </section>
+      <section>
+        <h3>Virtual Accessibility Node</h3>
+        <p><code>canvas</code>などで作られたUIに対して仮想のアクセシビリティノードを付与する。</p>
+      </section>
+      <section>
+        <pre><code class="javascript">const canvas = document.getElementById('canvas');
+canvas.attachAccessibleRoot();
+
+const table = canvas.accessibleRoot.appendChild(new AccessibleNode());
+table.role = 'table';</code></pre>
+      </section>
+      <section>
+        <h4>Demo: Build virtual accessible nodes <small class="u-dIb">out of date syntax</small></h4>
+        <p data-height="399" data-theme-id="dark" data-slug-hash="pQVVeO" data-default-tab="js,result" data-user="masuP9" data-pen-title="Demo: Build virtual accessible nodes out-of-date syntax" class="codepen">See the Pen <a href="https://codepen.io/masuP9/pen/pQVVeO/">Demo: Build virtual accessible nodes out-of-date syntax</a> by masuP9 (<a href="https://codepen.io/masuP9">@masuP9</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+      </section>
+      <section>
+        <figure>
+          <figcaption>Screen shot Virtual Accessibility Tree(Chrome 70)</figcaption>
+          <img src="./assets/screenshot_virtual_a11y_node.png" alt="Accessibility Treeインスペクタのスクリーンショット。Canvasを起点に heading と list, listitem がテキストノードを持ってAccessibility Treeに表示されている。" />
+        </figure>
+      </section>
+      <section>
+        <p>ここでもプライバシーの問題？</p>
+        <aside class="notes">
+          <p>仮想ノードを操作するためフォーカス可能なプロパティとイベントを付与する方法が提案されているが…</p>
+          <p>仮想ノードにアクセスがあった時点で支援技術ユーザーだということがブラウザに伝わる？</p>
+          <p>現時点では仮想ノードは構築できても、仮想ノードへのフォーカスまでは実装されていない</p>
+        </aside>
+      </section>
+      <section>
+        <h3>Query Computed Accessibility Tree</h3>
+        <p>計算されたアクセシビリティツリーを確かめる。</p>
+      </section>
+      <section>
+        <pre><code class="javascript">const tree = document.createElement('ul');
+tree.role = 'tree';
+window.getComputedAccessibleNode(tree).then(result =&gt; {
+  console.log(result.role); // 👉 'tree';
+});
+</code></pre>
+      <p>非同期で取得する</p>
+      </section>
+      <section>
+        <h4>Demo</h4>
+        <p data-height="320" data-theme-id="dark" data-slug-hash="aQGrrL" data-default-tab="html,result" data-user="masuP9" data-pen-title="Demo: Query computed Accessible Tree table display: block; table" class="codepen">See the Pen <a href="https://codepen.io/masuP9/pen/aQGrrL/">Demo: Query computed Accessible Tree table display: block; table</a> by masuP9 (<a href="https://codepen.io/masuP9">@masuP9</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+      </section>
+      <section>
+        <h4>Use case</h4>
+        <ul>
+          <li>アクセシビリティツリーの自動テスト</li>
+          <li>ブラウザ拡張機能による支援技術</li>
+        </ul>
+      </section>
+      <section>
+        <h3>AccessibleNode はどうなった？</h3>
+        <p>当初はDOMの<code>Element</code>に関連付けられた<code>AccessibleNode</code>からプロパティを<br>読み書きする方針だった</p>
+      </section>
+      <section>
+        <p>以下のような問題があり、AccessibleNode ではなく簡素なAPIへの提案へ以降</p>
+        <ul>
+          <li>パフォーマンス</li>
+          <li>アクセシビリティツリー計算方法の標準化</li>
+          <li>ARIAプロパティとAccessibleNodeプロパティの優先順位</li>
+        </ul>
+      </section>
+      <section>
+        <ul>
+          <li>アクセシビリティツリーは、レンダリングツリーにARIAなどが反映されて計算される。</li>
+          <li class="fragment">計算済のアクセシビリティツリーを取得するには多くの計算が必要。</li>
+          <li class="fragment">アクセシビリティツリーの計算方法も各ブラウザによって少しずつ異なる...</li>
+        </ul>
+      </section>
+      <section>
+        <div class="u-fzL">
+          <pre><code class="javascript">element.accessibleNode.role = 'tree';
+console.log(element.accessibleNode.role) // 本当に 'tree' 🤔</code></pre>
+        </div>
+        <p>単純な参照では無い。</p>
+      </section>
+      <section>
+        <p>書き込みと読み取りを共通化しない</p>
+        <pre><code class="javascript">element.role = 'tree';
+window.getComputedAccessibleNode(element).then(result =&gt; {});</code></pre>
+      </section>
+      <section>
+        <h3>Can I use AOM</h3>
+        <table id="can-i-use-table" style="font-size: 0.75em;width: 100%;">
+          <thead>
+            <tr>
+              <th></th>
+              <th scope="col">Chrome 70</th>
+              <th scope="col">Firefox <abbr title="Nightly Build">NB</abbr><sup aria-describedby="can-i-use-footnote-firefox-nb">*1</sup></th>
+              <th scope="col">Safari <abbr title="Technology Preview">TP</abbr><sup aria-describedby="can-i-use-footnote-safari-tp">*2</sup></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <span class="u-dB u-fwN u-fzS">Reflect ARIA attributes</span>
+              </th>
+              <td>Yes<sup aria-describedby="can-i-use-footnote-remain-out-of-syntax">*3</sup> <sup aria-describedby="can-i-use-footnote-many-bugs">*4</sup></td>
+              <td>No</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <span class="u-dB u-fwN u-fzS">Listen for input events from AT</span>
+              </th>
+              <td>No</td>
+              <td>No</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <span class="u-dB u-fwN u-fzS">Build virtual accessible nodes</span>
+              </th>
+              <td>Yes <sup aria-describedby="can-i-use-footnote-only-out-of-syntax">*5</sup></td>
+              <td>No</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <span class="u-dB u-fwN u-fzS">Query computed accessibility tree</span>
+              </th>
+              <td>Yes</td>
+              <td>No <sup aria-describedby="can-i-use-footnote-only-accessible-node">*6</sup></td>
+              <td>No</td>
+            </tr>
+          </tbody>
+        </table>
+        <footer>
+          <ol style="font-size: 0.55em;" class="u-taL u-dB u-mt24">
+            <li id="can-i-use-footnote-firefox-nb">65.0a1 (2018-11-23) (64 bit)</li>
+            <li id="can-i-use-footnote-safari-tp">Release 70 (Safari 12.1, WebKit 13607.1.13)</li>
+            <li id="can-i-use-footnote-remain-out-of-syntax">一部古い記法の対応が残る</li>
+            <li id="can-i-use-footnote-many-bugs">バグが多い😭</li>
+            <li id="can-i-use-footnote-only-out-of-syntax">古い記法による対応</li>
+            <li id="can-i-use-footnote-only-accessible-node"><code>element.AccessibleNode</code>のみ存在</li>
+          </ol>
+        </footer>
+        <style>
+          #can-i-use-table th {
+            white-space: nowrap;
+          }
+
+          #can-i-use-table td {
+            text-align: center;
+          }
+        </style>
+      </section>
+      <section>
+        <h2>まとめ</h2>
+      </section>
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+  <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+      slideNumber: true,
+      history: true,
+      dependencies: [
+        { src: 'plugin/markdown/marked.js' },
+        { src: 'plugin/markdown/markdown.js' },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+      ]
+    });
+  </script>
+</body>
+
+</html>
