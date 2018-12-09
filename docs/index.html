@@ -7,7 +7,7 @@
 
   <title>アクセシブルなウェブの実装のためにWAI-ARIAを使いこなす</title>
   <meta name="description" content="">
-
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/caniuse-embed.min.js" as="script">
   <link rel="stylesheet" href="css/reveal.css">
   <link rel="stylesheet" href="css/theme/black.css">
   <link rel="stylesheet" href="css/additional.css">
@@ -42,39 +42,34 @@
         </footer>
       </section>
       <section>
-        <h2>わたしについて</h2>
-        <p class="u-taL u-dF -middle">
-          <img class="u-mr16" src="./assets/masuP9.jpg" height="150"
-            style="border-radius: 50%;" alt="@masuP9のプロフィール写真。ますぴーとかかれた木製のバッジの写真" />
-          <span>
-            <a href="https://twitter.com/masuP9">@masuP9</a>
-            <span class="u-dB">株式会社サイバーエージェント</span>
-          </span>
+        <h2>わたし</h2>
+        <p class="u-taC">
+          <img class="u-mr24" src="./assets/profile.jpg" height="200" style="border-radius: 50%;" alt="プロフィール写真。眼鏡、寝癖頭でマイクを持って話している写真。" />
         </p>
-        <ul class="u-fzS">
-          <li>フロントエンドデベロッパー兼アクセシビリティエヴァンジェリスト</li>
-          <li>ウェブアクセシビリティ基盤委員会(WAIC) 実装・翻訳作業部会 委員</li>
-        </ul>
       </section>
       <section>
         <h2>今日のお話</h2>
         <ol class="u-dB" role="directory">
-          <li>はじめに</li>
-          <li>WAI-ARIAとは</li>
-          <li>WAI-ARIAの前にHTML</li>
-          <li>WAI-ARIAを使いこなす</li>
-          <li>実際のワークフロー</li>
+          <li><a href="#introduction">はじめに</a></li>
+          <li><a href="#what-is-wai-aria">WAI-ARIAとは</a></li>
+          <li><a href="#html-before-aria">WAI-ARIAの前にHTML</a></li>
+          <li><a href="#use-well-aria">WAI-ARIAを使いこなす</a></li>
+          <li><a href="#real-world-work-flow">実際のワークフロー</a></li>
         </ol>
       </section>
-      <section>
+      <section id="introduction">
         <h2>はじめに</h2>
       </section>
       <section>
-        <h3>フロントエンドの実装が担保するウェブアクセシビリティ</h3>
+        <h3>フロントエンドの実装が担保する<span class="u-dIb">ウェブアクセシビリティ</span></h3>
+        <ul>
+          <li>マシンリーダビリティ</li>
+          <li>キーボード操作</li>
+        </ul>
       </section>
       <section>
         <h3>実装腕力</h3>
-        <p>息を吐くようにアクセシブルな実装をする</p>
+        <p><em>息を吐くように</em>アクセシブルな実装をする</p>
       </section>
       <section>
         <h2>WAI-ARIAとは</h2>
@@ -138,24 +133,24 @@ hogehoge
         </ul>
       </section>
       <section>
-        <pre><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;
+        <pre class="u-fzL"><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;
   &lt;li role=&quot;treeitem&quot; aria-selected=&quot;true&quot;&gt;...&lt;/li&gt;
   &lt;li role=&quot;treeitem&quot; aria-selected=&quot;false&quot;&gt;...&lt;/li&gt;
 &lt;/ul&gt;</code></pre>
       </section>
       <section>
         <h3>役割 : <code>role</code></h3>
-        <pre><code class="html">&lt;ul role=&quot;tree&quot;&gt;&lt;/ul&gt;</code></pre>
+        <pre class="u-fzL"><code class="html">&lt;ul role=&quot;tree&quot;&gt;&lt;/ul&gt;</code></pre>
         <p>これはツリーウィジェットである</p>
       </section>
       <section>
         <h3>状態 : ステート</h3>
-        <pre><code class="html">&lt;li role=&quot;treeitem&quot; aria-selected=&quot;true&quot;&gt;...&lt;/li&gt;</code></pre>
+        <pre class="u-fzL"><code class="html">&lt;li role=&quot;treeitem&quot; aria-selected=&quot;true&quot;&gt;...&lt;/li&gt;</code></pre>
         <p>このツリーアイテムは選択されている（いない）</p>
       </section>
       <section>
         <h3>プロパティ</h3>
-        <pre><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;&lt;/ul&gt;</code></pre>
+        <pre class="u-fzL"><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;&lt;/ul&gt;</code></pre>
         <p>このツリーウィジェットの名前プロパティは<code class="u-dIb">menu tree</code>である</p>
       </section>
       <section>
@@ -253,52 +248,63 @@ hogehoge
       </section>
       <section>
         <h4><code>&lt;a href&gt;</code> / <code>&lt;button&gt;</code></h4>
+        <p><img src="./assets/button_tshirts.png" height="400" alt="Use button, not div Tシャツ"></p>
+      </section>
+      <section>
         <ul>
           <li>遷移と実行</li>
           <li>フォーカス可能ということ</li>
-        </ul>
-        <footer class="u-mt40">
-          <p><small><a href='http://takenspc.hatenablog.com/entry/2013/10/21/063807'>リンクかボタンかそれ以外か - Unreviewed</a></small></p>
-        </footer>
+        </ul>    
+        <p class="u-mt40"><small><a href='http://takenspc.hatenablog.com/entry/2013/10/21/063807'>リンクかボタンかそれ以外か - Unreviewed</a></small></p>
       </section>
       <section>
         <h4><code>&lt;h1&gt;</code> / <code>&lt;section&gt;</code></h4>
         <ul>
+          <li>文章構造</li>
           <li>画面の領域分割とラベリング</li>
         </ul>
       </section>
       <section>
         <h4><code>&lt;table&gt;</code> / <code>&lt;th&gt;</code> / <code>&lt;td&gt;</code></h4>
-        <ul>
-          <li>データ構造を示す</li>
-        </ul>
+        <p>データの参照構造を示す</p>
+        <p><a href="https://codepen.io/masuP9/pen/EGxVRy?editors=1000">Table markup example : No Hacks</a></p>
       </section>
       <section>
         <h4><code>input</code>  / <code>label</code></h4>
-        <p>NG</p>
-        <pre><code class='language-html' lang='html'>&lt;dt&gt;会社名&lt;/dt&gt;
-&lt;dd&gt;&lt;input type=&quot;text&quot; /&gt;&lt;/dd&gt;
-</code></pre>
-        <p>OK</p>
-        <pre><code class='language-html' lang='html'>&lt;label&gt;
+        <figure class="u-dF -middle">
+          <figcaption class="u-mr20">NG</figcaption>
+          <pre class="u-mt4"><code class="html">&lt;dt&gt;会社名&lt;/dt&gt;
+&lt;dd&gt;&lt;input type=&quot;text&quot; /&gt;&lt;/dd&gt;</code></pre> 
+        </figure>
+        <figure class="u-dF -middle">
+          <figcaption class="u-mr20">OK</figcaption>
+          <pre class="u-mt4"><code class="html">&lt;label&gt;
 会社名 &lt;input type=&quot;text&quot; /&gt;
 &lt;/label&gt;</code></pre>
+        </figure>
       </section>
       <section>
         <h4><code>&lt;datalist&gt;</code></h4>
         <p>(e.g. <a href='https://shop.zabou.org/'>大阪のセレクトショップZABOUの通販/ウェブショップ</a></p>        
       </section>
       <section>
+        <p class="ciu_embed" data-feature="datalist" data-periods="current" data-accessible-colours="false">
+          <a href="http://caniuse.com/#feat=datalist">Can I Use datalist?</a> Data on support for the datalist feature across the major browsers from caniuse.com.
+        </p>
+      </section>
+      <section>
         <h3>HTMLの属性</h3>
       </section>
       <section>
         <h4><code>alt</code> / <code>title</code></h4>
-        <pre><code class='language-html' lang='html'>&lt;a href=&quot;#&quot; class=&quot;right-off-canvas-toggle show-for-small globalNavButton&quot; aria-expanded=&quot;true&quot;&gt;
+        <div class="u-fzL">
+          <pre><code class="html">&lt;a href=&quot;#&quot; class=&quot;right-off-canvas-toggle show-for-small globalNavButton&quot; aria-expanded=&quot;true&quot;&gt;
   &lt;img src=&quot;https://www.m-g-n.me/wp-content/themes/mgn/src/svg/sandwich.svg&quot;&gt;
 &lt;/a&gt;</code></pre>
+        </div>
       </section>
       <section>
-        <pre><code class='language-html' lang='html'>&lt;abbr title=&quot;point&quot;&gt;pt&lt;/abbr&gt;</code></pre>
+        <pre class="u-fzL"><code class="html">&lt;abbr title=&quot;point&quot;&gt;pt&lt;/abbr&gt;</code></pre>
       </section>
       <section>
         <h4><code>tabindex</code></h4>
@@ -333,11 +339,15 @@ hogehoge
       <section>
         <h4>よく使う <code>role</code></h4>
         <ul>
+          <li><code>tab</code></li>
           <li><code>alert</code></li>
           <li><code>dialog</code></li>
-          <li><code>tab</code></li>
           <li><code>search</code></li>
         </ul>
+      </section>
+      <section>
+        <h5><code>alert</code></h5>
+        <pre><code class="html"><div role="alert" aria-live="assertive">！</div></code></pre>
       </section>
       <section>
         <h4>頻出ステート、プロパティ</h4>
@@ -356,8 +366,8 @@ hogehoge
       </section>
       <section>
         <p>HTMLの持つ機能を代替的に実装する場合</p>
-        <pre><code class='language-html' lang='html'>&lt;input type=&quot;datatime-local&quot; /&gt;</code></pre>
-        <pre><code class='language-html' lang='html'>&lt;div aria-expanded=&quot;true&quot;&gt;
+        <pre><code class="html">&lt;input type=&quot;datatime-local&quot; /&gt;</code></pre>
+        <pre><code class="html">&lt;div aria-expanded=&quot;true&quot;&gt;
   &lt;input role=&quot;combobox&quot; type=&quot;text&quot; aria-haspopup=&quot;grid&quot; aria-activedescendant=&quot;date-2018-12-09&quot; /&gt;
   &lt;div role=&quot;grid&quot;&gt;
       table widget...
@@ -366,8 +376,8 @@ hogehoge
       </section>
       <section>
         <p>通常のHTMLネイティブ要素を装飾のためだけに代替しなくても良い</p>
-        <pre><code class='language-html' lang='html'>&lt;span role=&quot;checkbox&quot; aria-checked=&quot;true&quot; tabindex=&quot;0&quot;&gt;&lt;/span&gt;</code></pre>
-        <pre><code class='language-html' lang='html'>&lt;input type=&quot;checkbox&quot; checked style=&quot;opacity: 0;/* visually hidden style */&quot; /&gt;
+        <pre><code class="html">&lt;span role=&quot;checkbox&quot; aria-checked=&quot;true&quot; tabindex=&quot;0&quot;&gt;&lt;/span&gt;</code></pre>
+        <pre><code class="html">&lt;input type=&quot;checkbox&quot; checked style=&quot;opacity: 0;/* visually hidden style */&quot; /&gt;
 &lt;span aria-hidden=&quot;true&quot;&gt;
   &lt;svg&gt;...&lt;/svg&gt;
 &lt;/span&gt;</code></pre>
@@ -377,10 +387,10 @@ hogehoge
       </section>
       <section>
         <p>例) <code>role[tablist] &gt; role[tab]</code> </p>
-        <pre><code class='language-html' lang='html'>&lt;ul role=&quot;tablist&quot;&gt;
+        <pre><code class="html">&lt;ul role=&quot;tablist&quot;&gt;
   &lt;li role=&quot;tab&quot;&gt;&lt;/li&gt;
 &lt;/ul&gt;</code></pre>
-        <pre><code class='language-html' lang='html'>&lt;ul role=&quot;tablist&quot;&gt;
+        <pre><code class="html">&lt;ul role=&quot;tablist&quot;&gt;
   &lt;li role=&quot;none&quot;&gt;
     &lt;a href=&quot;#tabpanel-1&quot; role=&quot;tab&quot;&gt;Tab&lt;/a&gt;
   &lt;/li&gt;
@@ -427,7 +437,7 @@ hogehoge
 
   <script src="lib/js/head.min.js"></script>
   <script src="js/reveal.js"></script>
-  <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/caniuse-embed.min.js"></script>
 
   <script>
     // More info about config & dependencies:
