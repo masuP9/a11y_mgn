@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <h1>Real World Workflow</h1>
+  <nav>
+    <h2><button type="button" aria-controls="list">Menu</button></h2>
+    <ul id="list">
+        <li>
+            <a href="/">Home</a>
+        </li>
+    </ul>
+  </nav>
+  <script>
+      (d => {
+          const nav = d.querySelector('nav');
+          const button = d.querySelector('button');
+          const list = d.querySelector('ul');
+
+          function initialize() {
+              nav.setAttribute('aria-expanded', false);
+              list.setAttribute('aria-hidden', true);
+          }
+          function toggle() {
+              if (nav.getAttribute('aria-expanded') === 'false') {
+                nav.setAttribute('aria-expanded', true);
+                list.setAttribute('aria-hidden', false);
+              } else {
+                nav.setAttribute('aria-expanded', false);
+                list.setAttribute('aria-hidden', true);
+              }
+          }
+          button.addEventListener('click', toggle);
+          initialize();
+      })(document);
+  </script>
+  <style>
+      [aria-hidden="true"] {
+          display: none;
+      }
+  </style>
+</body>
+</html>

@@ -29,7 +29,7 @@
   <div class="reveal">
     <div class="slides">
       <section>
-        <h1>
+        <h1 style="font-size: 2.1em">
           アクセシブルなウェブの実装のためにWAI-ARIAを使いこなす
         </h1>
         <footer>
@@ -133,10 +133,12 @@ hogehoge
         </ul>
       </section>
       <section>
-        <pre class="u-fzL"><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;
+        <div class="u-fzL">
+          <pre><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;
   &lt;li role=&quot;treeitem&quot; aria-selected=&quot;true&quot;&gt;...&lt;/li&gt;
   &lt;li role=&quot;treeitem&quot; aria-selected=&quot;false&quot;&gt;...&lt;/li&gt;
 &lt;/ul&gt;</code></pre>
+      </div>
       </section>
       <section>
         <h3>役割 : <code>role</code></h3>
@@ -145,12 +147,12 @@ hogehoge
       </section>
       <section>
         <h3>状態 : ステート</h3>
-        <pre class="u-fzL"><code class="html">&lt;li role=&quot;treeitem&quot; aria-selected=&quot;true&quot;&gt;...&lt;/li&gt;</code></pre>
+        <pre class="u-fzL"><code class="html">&lt;li aria-selected=&quot;true&quot; role=&quot;treeitem&quot;&gt;...&lt;/li&gt;</code></pre>
         <p>このツリーアイテムは選択されている（いない）</p>
       </section>
       <section>
         <h3>プロパティ</h3>
-        <pre class="u-fzL"><code class="html">&lt;ul role=&quot;tree&quot; aria-label=&quot;menu tree&quot;&gt;&lt;/ul&gt;</code></pre>
+        <pre class="u-fzL"><code class="html">&lt;ul aria-label=&quot;menu tree&quot; role=&quot;tree&quot;&gt;&lt;/ul&gt;</code></pre>
         <p>このツリーウィジェットの名前プロパティは<code class="u-dIb">menu tree</code>である</p>
       </section>
       <section>
@@ -255,7 +257,7 @@ hogehoge
           <li>遷移と実行</li>
           <li>フォーカス可能ということ</li>
         </ul>    
-        <p class="u-mt40"><small><a href='http://takenspc.hatenablog.com/entry/2013/10/21/063807'>リンクかボタンかそれ以外か - Unreviewed</a></small></p>
+        <p class="u-mt40"><small><a href="http://takenspc.hatenablog.com/entry/2013/10/21/063807">リンクかボタンかそれ以外か - Unreviewed</a></small></p>
       </section>
       <section>
         <h4><code>&lt;h1&gt;</code> / <code>&lt;section&gt;</code></h4>
@@ -285,7 +287,7 @@ hogehoge
       </section>
       <section>
         <h4><code>&lt;datalist&gt;</code></h4>
-        <p>(e.g. <a href='https://shop.zabou.org/'>大阪のセレクトショップZABOUの通販/ウェブショップ</a></p>        
+        <p>(e.g. <a href="https://shop.zabou.org/">大阪のセレクトショップZABOUの通販/ウェブショップ</a></p>        
       </section>
       <section>
         <p class="ciu_embed" data-feature="datalist" data-periods="current" data-accessible-colours="false">
@@ -316,7 +318,7 @@ hogehoge
       </section>
       <section>
         <h3>Read the HTML Living Standard</h3>
-        <p><a href='https://html.spec.whatwg.org/multipage/#toc-semantics'>4 The elements of HTML</a></p>
+        <p><a href="https://html.spec.whatwg.org/multipage/#toc-semantics">4 The elements of HTML</a></p>
       </section>
       <section>
         <h2>WAI-ARIAを使う時の考え方</h2>
@@ -347,7 +349,11 @@ hogehoge
       </section>
       <section>
         <h5><code>alert</code></h5>
-        <pre><code class="html"><div role="alert" aria-live="assertive">！</div></code></pre>
+        <p>ライブリージョン、要素内の変化を監視</p>
+        <pre><code class="html">&lt;div role="alert" aria-live="assertive"&gt;
+  &lt;p&gt;！&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      <p><a href="https://howlowck.github.io/ARIA-Demo/pages/live-regions.html">Live Regions - ARIA Demo</a></p>
       </section>
       <section>
         <h4>頻出ステート、プロパティ</h4>
@@ -362,7 +368,27 @@ hogehoge
         </ul>
       </section>
       <section>
-        <h3>どうしてもHTMLのネイティブ要素が使えない時</h3>
+        <h5><code>aria-expanded</code></h5>
+        <p>要素の開閉状態を表す</p>
+        <p class="fragment">≠ 表示/非表示</p>
+      </section>
+      <section>
+        <pre><code>&lt;nav aria-expanded="true" aria-labelledby="menu-toggle-link"&gt;
+  &lt;a href="#menu" id="menu-toggle-link"&gt;Menu&lt;/a&gt;
+  &lt;ul aria-hidden="false" id="menu"&gt; &lt;!-- こっちが非表示 --&gt;
+    &lt;li&gt;&lt;a href="./works"&gt;Works&lt;/a&gt;&lt;/li&gt;
+    ...
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+      </section>
+      <section>
+        <h3><em>どうしても</em>HTMLのネイティブ要素が<span class="u-dIb">使えない時</span></h3>
+      </section>
+      <section>
+        <div class="u-fzL">
+          <pre><code class="html">&lt;h7&gt;&lt;/h7&gt;</code></pre>
+          <pre><code class="html">&lt;div role="heading" aria-level="7"&gt;&lt;/div&gt;</code></pre>
+        </div>
       </section>
       <section>
         <p>HTMLの持つ機能を代替的に実装する場合</p>
@@ -400,11 +426,26 @@ hogehoge
         <h2>WAI-ARIAを使う時に参照する資料やドキュメント</h2>
       </section>
       <section>
-        <h3><a href='https://www.w3.org/TR/wai-aria-practices-1.1/'>WAI-ARIA Authoring Practices 1.1</a></h3>
+        <h3><a href="https://www.w3.org/TR/wai-aria-practices-1.1/">WAI-ARIA Authoring Practices 1.1</a></h3>
+        <p>ARIAの実装例、キーボード操作の標準も例示</p>
       </section>
       <section>
-        <h3><a href='https://www.w3.org/TR/html-aria/'>ARIA in HTML</a></h3>
-        <p><a href='https://momdo.github.io/html-aria/'>ARIA in HTML 日本語訳</a></p>
+        <h3><a href="https://www.w3.org/TR/html-aria/">ARIA in HTML</a></h3>
+        <p>ホスト言語をHTMLにしたときのARIAの使用規範</p>
+        <p><small><a href="https://momdo.github.io/html-aria/">ARIA in HTML 日本語訳</a></small></p>
+      </section>
+      <section>
+        <p>グローバル<code>aria-*</code>属性を除く<code>aria-*</code>属性は付与できる要素 or <code>role</code>が定められている</p>
+      </section>
+      <section>
+        <figure>
+          <figcaption>NG</figcaption>
+          <pre><code class="html">&lt;div aria-expanded="false"&gt;&lt;/div&gt;</code></pre>
+        </figure>
+        <figure>
+            <figcaption>OK</figcaption>
+            <pre><code class="html">&lt;section aria-expanded="false"&gt;&lt;/section&gt;</code></pre>
+          </figure>
       </section>
       <section>
         <h2>WAI-ARIA の検証</h2>
