@@ -71,7 +71,7 @@
         <h3>実装腕力</h3>
         <p><em>息を吐くように</em>アクセシブルな実装をする</p>
       </section>
-      <section>
+      <section id="#what-is-wai-aria">
         <h2>WAI-ARIAとは</h2>
       </section>
       <section>
@@ -242,8 +242,9 @@ hogehoge
           <figcaption style="font-size: 0.5em;">ブラウザがコンテンツやセマンティクスを支援技術に伝えるまで</figcaption>
         </figure>
       </section>
-      <section>
+      <section id="html-before-aria">
         <h2>WAI-ARIAの前にHTML</h2>
+        <p>まじで</p>
       </section>
       <section>
         <h3>適切な要素選択</h3>
@@ -317,13 +318,18 @@ hogehoge
         </ul>
       </section>
       <section>
+        <div tabindex="0">hoge</div>
+        <pre><code class="html"><div tabindex="0">hoge</div></code></pre>
+      </section>
+      <section>
         <h3>Read the HTML Living Standard</h3>
         <p><a href="https://html.spec.whatwg.org/multipage/#toc-semantics">4 The elements of HTML</a></p>
       </section>
-      <section>
-        <h2>WAI-ARIAを使う時の考え方</h2>
+      <section id="use-well-aria">
+        <h2>WAI-ARIAを使いこなす</h2>
       </section>
       <section>
+        <h3>考え方</h3>
         <p>WAI-ARIAはホスト言語のセマンティクスを補強する</p>
         <ul>
           <li>HTMLで表現できないものを表現する時</li>
@@ -357,15 +363,25 @@ hogehoge
       </section>
       <section>
         <h4>頻出ステート、プロパティ</h4>
-        <ul>
-          <li><code>aria-expanded</code></li>
-          <li><code>aria-hidden</code></li>
-          <li><code>aria-controls</code></li>
-          <li><code>aria-current</code></li>
-          <li><code>aria-label</code></li>
-          <li><code>aria-describedby</code></li>
-          <li><code>aria-live</code></li>
+        <ul class="u-ml0">
+          <li class="u-dF -middle"><code class="u-mr8" style="flex-grow: 1;">aria-label</code> <small style="font-size: 0.5em">名前プロパティを与える</small></li>
+          <li class="u-dF -middle"><code class="u-mr8" style="flex-grow: 1;">aria-expanded</code> <small style="font-size: 0.5em">展開されているかどうか</small></li>
+          <li class="u-dF -middle"><code class="u-mr8" style="flex-grow: 1;">aria-hidden</code> <small style="font-size: 0.5em">隠されているかどうか</small></li>
+          <li class="u-dF -middle"><code class="u-mr8" style="flex-grow: 1;">aria-controls</code> <small style="font-size: 0.5em">制御する要素を示す</small></li>
+          <li class="u-dF -middle"><code class="u-mr8" style="flex-grow: 1;">aria-current</code> <small style="font-size: 0.5em">現在位置であることを示す</small></li>
+          <li class="u-dF -middle"><code class="u-mr8" style="flex-grow: 1;">aria-describedby</code> <small style="font-size: 0.5em">説明テキストがある要素を示す</small></li>
+          <li class="u-dF -middle"><code class="u-mr8" style="flex-grow: 1;">aria-live</code> <small style="font-size: 0.5em">自動更新される要素を示す</small></li>
         </ul>
+      </section>
+      <section>
+        <p><code>alt</code>の代替</p>
+        <div class="u-fzL">
+          <pre><code class="html"><button type="button" aria-label="menu" class="Hamburger">
+  <span class="Hamburger__bun -upper"></span>
+  <span class="Hamburger__patty"></span>
+  <span class="Hamburger__bun -lower"></span>
+</button></code></pre>
+        </div>
       </section>
       <section>
         <h5><code>aria-expanded</code></h5>
@@ -467,7 +483,7 @@ hogehoge
           <li>VoiceOver</li>
         </ul>
       </section>
-      <section>
+      <section id="real-world-work-flow">
         <h2>実際のコーディングの流れ</h2>
       </section>
       <section>
