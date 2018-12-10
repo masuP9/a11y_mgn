@@ -8,6 +8,14 @@
 </head>
 <body>
   <h1>Real World Workflow</h1>
+  <nav aria-expanded="false">
+      <h2><button type="button" aria-controls="menu">menu</button></h2>
+      <ul aria-hidden="true" id="menu">
+          <li>
+              <a href="/">home</a>
+          </li>
+      </ul>
+  </nav>
   <script>
       (d => {
           const nav = d.querySelector('nav');
